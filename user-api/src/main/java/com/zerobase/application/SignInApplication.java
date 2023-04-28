@@ -5,7 +5,7 @@ import com.zerobase.domain.SignInForm;
 import com.zerobase.domain.common.UserType;
 import com.zerobase.domain.model.Customer;
 import com.zerobase.exception.CustomException;
-import com.zerobase.service.CustomerService;
+import com.zerobase.service.cutomer.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
