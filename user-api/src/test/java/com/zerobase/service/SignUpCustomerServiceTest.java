@@ -1,12 +1,10 @@
 package com.zerobase.service;
 
-import com.zerobase.config.FeignConfig;
 import com.zerobase.domain.SignUpForm;
+import com.zerobase.service.cutomer.SignUpCustomerService;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 
