@@ -7,7 +7,6 @@ import com.zerobase.domain.model.Customer;
 import com.zerobase.domain.model.Seller;
 import com.zerobase.exception.CustomException;
 import com.zerobase.service.cutomer.CustomerService;
-import com.zerobase.service.seller.SellerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
