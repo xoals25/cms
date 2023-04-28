@@ -1,4 +1,4 @@
-package com.zerobase.service;
+package com.zerobase.service.cutomer;
 
 import com.zerobase.domain.SignUpForm;
 import com.zerobase.domain.model.Customer;
@@ -45,7 +45,7 @@ public class SignUpCustomerService {
     }
 
     @Transactional
-    public LocalDateTime ChangeCustomerValidateEmail(Long customerId, String verificationCode) {
+    public LocalDateTime changeCustomerValidateEmail(Long customerId, String verificationCode) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
 
