@@ -43,11 +43,17 @@ public class CartApplication {
 		return cartService.addCart(customerId, form);
 	}
 
+	public Cart updateCart(Long memberId, Cart basket) {
+		// 실질적으로 변하는 데이터
+		// 상품의 삭제, 수량 변경
+		cartService.putCart(memberId, basket);
+		return getCart(memberId);
+	}
+
 	// 1. 장바구니에 상품을 추가 했다.
 	// 2. 상품의 가격이나 수량이 변동 된다.
-	// 3.
 	public Cart getCart(Long customerId) {
-		// 2. 메세지를 보고 난 다음에는, 이미 본 메세지는 스팸이 되기 때문에 제거한다.
+		// 3. 메세지를 보고 난 다음에는, 이미 본 메세지는 스팸이 되기 때문에 제거한다.
 		Cart cart = refreshCart(cartService.getCart(customerId));
 
 		cartService.putCart(customerId, cart);
@@ -58,11 +64,11 @@ public class CartApplication {
 		returnCart.setProducts(cart.getProducts());
 		returnCart.setMessages(cart.getMessages());
 
-		cart.setMessages(new ArrayList<>());
+		returnCart.setMessages(new ArrayList<>());
 
-		cartService.putCart(customerId, cart);
+		cartService.putCart(customerId, returnCart);
 
-		return returnCart;
+		return cart;
 	}
 
 	public void clearCart(Long memberId) {
