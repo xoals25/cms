@@ -22,4 +22,8 @@ public class ProductSearchService {
 		return productRepository.findWithProductItemsById(productId)
 			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT));
 	}
+
+	public List<Product> getListByProductIds(List<Long> productIds) {
+		return productRepository.findAllByIdIn(productIds);
+	}
 }
