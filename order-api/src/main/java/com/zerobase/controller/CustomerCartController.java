@@ -1,6 +1,7 @@
 package com.zerobase.controller;
 
 import com.zerobase.application.CartApplication;
+import com.zerobase.application.OrderApplication;
 import com.zerobase.config.JwtAuthenticationProvider;
 import com.zerobase.domain.redis.AddProductCartForm;
 import com.zerobase.domain.redis.Cart;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerCartController {
 
     private final CartApplication cartApplication;
+    private final OrderApplication orderApplication;
     private final JwtAuthenticationProvider provider;
 
     @PostMapping
@@ -37,13 +39,22 @@ public class CustomerCartController {
         return ResponseEntity.ok(cartApplication.getCart(provider.getuserVo(token).getId()));
     }
 
-	@PutMapping
-	public ResponseEntity<Cart> updateCart(
-		@RequestHeader(name = "X-AUTH-TOKEN") String token,
+    @PutMapping
+    public ResponseEntity<Cart> updateCart(
+        @RequestHeader(name = "X-AUTH-TOKEN") String token,
         @RequestBody Cart cart
     ) {
-		return ResponseEntity.ok(
-			cartApplication.updateCart(provider.getuserVo(token).getId(), cart)
-		);
-	}
+        return ResponseEntity.ok(
+            cartApplication.updateCart(provider.getuserVo(token).getId(), cart)
+        );
+    }
+
+    @PostMapping("/order")
+    public ResponseEntity<Cart> orderCart(
+        @RequestHeader(name = "X-AUTH-TOKEN") String token,
+        @RequestBody Cart cart
+    ) {
+        orderApplication.order(token, cart);
+        return ResponseEntity.ok().build();
+    }
 }
