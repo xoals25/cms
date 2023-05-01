@@ -3,7 +3,9 @@ package com.zerobase.application;
 import static com.zerobase.exception.ErrorCode.ORDER_FAIL_CHECK_CART;
 import static com.zerobase.exception.ErrorCode.ORDER_FAIL_NO_MONEY;
 
+import com.zerobase.client.MailgunClient;
 import com.zerobase.client.UserClient;
+import com.zerobase.client.mailgurn.SendMailForm;
 import com.zerobase.client.user.ChangeBalanceForm;
 import com.zerobase.client.user.CustomerDto;
 import com.zerobase.domain.model.ProductItem;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderApplication {
 
+    private final MailgunClient mailgunClient;
     private final CartApplication cartApplication;
     private final UserClient userClient;
     private final ProductItemService productItemService;
@@ -50,12 +53,27 @@ public class OrderApplication {
             .money(-totalPrice)
             .build());
 
+        StringBuilder sb = new StringBuilder();
+
         for (Cart.Product product : orderCart.getProducts()) {
             for (Cart.ProductItem cartItem : product.getItems()) {
                 ProductItem productItem = productItemService.getProductItem(cartItem.getId());
                 productItem.setCount(productItem.getCount() - cartItem.getCount());
+                sb.append("상품명 : ").append(product.getName()).append("\n");
+                sb.append("옵션명 : ").append(cartItem.getName()).append("\n");
+                sb.append("개수 : ").append(cartItem.getCount()).append("\n");
+                sb.append("비용 : ").append(cartItem.getPrice() * cartItem.getCount()).append("\n");
             }
         }
+
+        sb.append("총 비용 합계 : ").append(totalPrice);
+
+        mailgunClient.sendEmail(SendMailForm.builder()
+            .from("tester@test.com")
+            .to(customerDto.getEmail())
+            .subject("상품 주문 내역")
+            .text(sb.toString())
+            .build());
     }
 
     private Integer getTotalPrice(Cart cart) {
