@@ -22,6 +22,9 @@ public class ProductItemService {
     private final ProductRepository productRepository;
     private final ProductItemRepository productItemRepository;
 
+    // 두가지의 전략이 있다.
+    // 1. 가져오고 확인해서 세이브
+    // 2. 바로 업데이트 치는 방법
     @Transactional
     public ProductItem getProductItem(Long id) {
         return productItemRepository.getReferenceById(id);
