@@ -19,6 +19,8 @@ import static com.zerobase.exception.ErrorCode.*;
 @RequiredArgsConstructor
 public class CustomerController {
 
+    // test
+
     private final JwtAuthenticationProvider provider;
     private final CustomerService customerService;
     private final CustomerBalanceService customerBalanceService;
